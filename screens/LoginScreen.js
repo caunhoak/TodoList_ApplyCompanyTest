@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 
 const LoginScreen = ({ navigation }) => {
@@ -17,21 +17,36 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <Layout style={styles.container}>
-      <Text category="h1">Login</Text>
-      <Input
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <Input
-        placeholder="Password"
-        value={password}
-        secureTextEntry
-        onChangeText={setPassword}
-        style={styles.input}
-      />
-      <Button onPress={handleLogin}>Login</Button>
+      <View style={styles.topBannerView}>
+        <Text style={styles.bannerText} category="h1">
+          Login
+        </Text>
+        <Text style={styles.bannerSubText} category="c2">
+          {" "}
+          ToDo List App{" "}
+        </Text>
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.formInputView}>
+        <Input
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+        />
+        <Input
+          placeholder="Password"
+          value={password}
+          secureTextEntry
+          onChangeText={setPassword}
+          style={styles.input}
+        />
+      </View>
+      <View style={styles.formButtonView}>
+        <Button style={styles.button} onPress={handleLogin}>
+          Login
+        </Button>
+      </View>
     </Layout>
   );
 };
@@ -39,11 +54,38 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topBannerView: {
+    height: "30%",
     justifyContent: "center",
-    padding: 16,
+    alignItems: "center",
+    backgroundColor: "#1565c0",
+  },
+  spacer: {
+    height: "10%",
+  },
+  bannerText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  bannerSubText: {
+    color: "white",
+    marginTop: 10,
+  },
+  formInputView: {
+    height: "40%",
+    padding: 20,
   },
   input: {
     marginVertical: 8,
+  },
+  formButtonView: {
+    height: "20%",
+    padding: 20,
+  },
+  button: {
+    borderRadius: 8,
+    height: 60,
   },
 });
 

@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Layout,
-  Text,
-  Input,
-  List,
-  ListItem,
-  Icon,
-} from "@ui-kitten/components";
+import { Button, Layout, Input, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 
 const ToDoListScreen = () => {
   const [tasks, setTasks] = useState([]);
   const [taskTitle, setTaskTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
 
   const handleAddTask = () => {
-    setTasks([...tasks, { title: taskTitle }]);
+    if (taskTitle.trim() === "" || taskDescription.trim() === "") {
+      return;
+    }
+    setTasks([...tasks, { title: taskTitle, description: taskDescription }]);
     setTaskTitle("");
+    setTaskDescription("");
   };
 
   const handleRemoveTask = (index) => {
@@ -33,7 +30,8 @@ const ToDoListScreen = () => {
 
   const renderItem = ({ item, index }) => (
     <ListItem
-      title={item.title}
+      title={`${index + 1}. ${item.title}`}
+      description={item.description}
       accessoryRight={() => renderItemAccessory(index)}
     />
   );
@@ -41,12 +39,20 @@ const ToDoListScreen = () => {
   return (
     <Layout style={styles.container}>
       <Input
-        placeholder="New Task"
+        placeholder="Task Title"
         value={taskTitle}
         onChangeText={setTaskTitle}
         style={styles.input}
       />
-      <Button onPress={handleAddTask}>Add Task</Button>
+      <Input
+        placeholder="Task Description"
+        value={taskDescription}
+        onChangeText={setTaskDescription}
+        style={styles.input}
+      />
+      <Button onPress={handleAddTask} style={styles.button}>
+        Add Task
+      </Button>
       <List data={tasks} renderItem={renderItem} style={styles.list} />
     </Layout>
   );
@@ -58,6 +64,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   input: {
+    marginVertical: 8,
+  },
+  button: {
     marginVertical: 8,
   },
   list: {
